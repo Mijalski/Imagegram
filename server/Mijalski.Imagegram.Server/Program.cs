@@ -22,7 +22,7 @@ builder.Services.AddAuthentication(options =>
     .AddJwtBearer(jwt =>
     {
         var key = Encoding.ASCII.GetBytes(builder.Configuration["Jwt:Secret"]);
-
+        
         jwt.SaveToken = true;
         jwt.TokenValidationParameters = new TokenValidationParameters
         {

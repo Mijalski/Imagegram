@@ -16,4 +16,9 @@
     <ProjectReference Include="..\Mijalski.Imagegram.Domain\Mijalski.Imagegram.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Modules\Accounts\Databases\" />
+    <Folder Include="Infrastructures\" />
+  </ItemGroup>
+
 </Project>

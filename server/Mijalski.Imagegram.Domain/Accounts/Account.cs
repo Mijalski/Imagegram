@@ -2,6 +2,10 @@
 
 public class Account
 {
-    public Guid Id { get; }
-    public string Name { get; } = string.Empty;
+    public Account(string name)
+    {
+        Name = name;
+    }
+
+    public string Name { get; }
 }
