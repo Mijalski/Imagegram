@@ -13,13 +13,14 @@ public class PostsModule : IModule
         return services
             .AddTransient<CreatePostCommandHandler>()
             .AddTransient<PostByIdQueryHandler>()
+            .AddTransient<AllPostsQueryHandler>()
             .AddTransient<IPostMapper, PostMapper>();
     }
 
     public IEndpointRouteBuilder MapEndpoints(IEndpointRouteBuilder endpoints)
     {
         endpoints.MapGet("/posts/{id}",
-                async (HttpContext context, PostByIdQueryHandler handler, Guid id) =>
+                async (HttpContext context, Guid id, PostByIdQueryHandler handler) =>
                 {
                     var postDto = await handler.GetPostOrDefaultById(id, context.RequestAborted);
                     return postDto is null ? Results.NotFound() : Results.Ok(postDto);
@@ -27,6 +28,14 @@ public class PostsModule : IModule
             .WithName("GetPost")
             .Produces<PostDto>()
             .Produces(StatusCodes.Status404NotFound);
+
+        endpoints.MapGet("/posts",
+                async (HttpContext context, int? skipCount, int? takeCount, AllPostsQueryHandler handler) =>
+                {
+                    return Results.Ok(await handler.GetAllPostsFromTo(skipCount, takeCount, context.RequestAborted));
+                })
+            .WithName("GetAllPosts")
+            .Produces<IList<PostDto>>();
 
         endpoints.MapPost("/posts",
                 async (HttpContext context, CreatePostCommand command, CreatePostCommandHandler handler) =>

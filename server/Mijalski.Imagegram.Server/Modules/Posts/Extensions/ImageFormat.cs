@@ -14,8 +14,8 @@ public static class ImageFormatExtensions
 {
     public static ImageFormat GetImageFormat(byte[] bytes)
     {
-        var bmp = Encoding.ASCII.GetBytes("BM");     // BMP
-        var png = new byte[] { 137, 80, 78, 71 };    // PNG
+        var bmp = Encoding.ASCII.GetBytes("BM"); // BMP
+        var png = new byte[] { 137, 80, 78, 71 }; // PNG
         var jpg = new byte[] { 255, 216, 255 }; // JPG
 
         if (bmp.SequenceEqual(bytes.Take(bmp.Length)))

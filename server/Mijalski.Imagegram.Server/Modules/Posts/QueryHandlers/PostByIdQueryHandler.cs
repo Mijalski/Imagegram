@@ -4,7 +4,6 @@ using Mijalski.Imagegram.Server.Modules.Posts.Databases;
 
 namespace Mijalski.Imagegram.Server.Modules.Posts.QueryHandlers;
 
-public record PostDto(byte[] Image, string? Caption, IEnumerable<string> Comments);
 
 class PostByIdQueryHandler
 {
@@ -21,6 +20,6 @@ class PostByIdQueryHandler
             .Include(_ => _.Comments)
             .SingleOrDefaultAsync(a => a.Id == id, cancellationToken);
 
-        return dbPost is null ? null : new PostDto(dbPost.Image, dbPost.Caption, dbPost.Comments.Select(c => c.Content));
+        return dbPost is null ? null : new PostDto(dbPost.Id, dbPost.Image, dbPost.Caption, dbPost.Comments.Select(c => c.Content));
     }
 }

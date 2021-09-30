@@ -32,17 +32,14 @@ class CreatePostCommandHandler
     {
         var imageFormat = ImageFormatExtensions.GetImageFormat(command.Image);
 
-        if (imageFormat == ImageFormat.Unknown)
+        switch (imageFormat)
         {
-            throw new ArgumentException("Image format not recognized!");
-        }
-        if (imageFormat == ImageFormat.Png)
-        {
-            throw new NotImplementedException();
-        } 
-        else if (imageFormat == ImageFormat.Bmp)
-        {
-            throw new NotImplementedException();
+            case ImageFormat.Unknown:
+                throw new ArgumentException("Image format not recognized!");
+            case ImageFormat.Png:
+                throw new NotImplementedException();
+            case ImageFormat.Bmp:
+                throw new NotImplementedException();
         }
 
         var currentAccount = await _currentAccountService.GetCurrentAccountAsync(cancellationToken);
