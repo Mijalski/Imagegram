@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Mijalski.Imagegram.Domain.Accounts;
 
 namespace Mijalski.Imagegram.Server.Modules.Accounts.Databases;
 
