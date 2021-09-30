@@ -49,7 +49,7 @@ class ApplicationDbContext : IdentityDbContext<DbAccount, IdentityRole<Guid>, Gu
 
         foreach (var entityEntry in entriesCreated)
         {
-            ((ICreationAudited)entityEntry.Entity).CreationDateTime = DateTimeOffset.Now;
+            ((ICreationAudited)entityEntry.Entity).CreationDateTime = DateTime.UtcNow; // TODO Postgre does not support DateTimeOffset 
         }
     }
 }

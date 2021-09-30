@@ -1,7 +1,7 @@
 ﻿using Mijalski.Imagegram.Domain.Accounts;
 using Mijalski.Imagegram.Server.Infrastructures.Databases;
-using Mijalski.Imagegram.Server.Infrastructures.Generics;
 using Mijalski.Imagegram.Server.Modules.Accounts.Databases;
+using Mijalski.Imagegram.Server.Modules.Accounts.Mappers;
 using Mijalski.Imagegram.Server.Modules.Accounts.Passwords;
 
 namespace Mijalski.Imagegram.Server.Modules.Accounts.CommandHandlers;
@@ -13,10 +13,10 @@ class CreateAccountCommandHandler
     private readonly ApplicationDbContext _dbContext;
     private readonly IAccountManager _accountManager;
     private readonly IAccountPasswordService _accountPasswordService;
-    private readonly IMapper<Account, DbAccount> _mapper;
+    private readonly IAccountMapper _mapper;
 
     public CreateAccountCommandHandler(ApplicationDbContext dbContext, 
-        IMapper<Account, DbAccount> mapper, 
+        IAccountMapper mapper, 
         IAccountManager accountManager,
         IAccountPasswordService accountPasswordService)
     {

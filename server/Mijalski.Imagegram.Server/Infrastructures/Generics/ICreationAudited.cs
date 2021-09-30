@@ -2,5 +2,5 @@
 
 public interface ICreationAudited
 {
-    DateTimeOffset CreationDateTime { get; set; }
+    DateTime CreationDateTime { get; set; }
 }

@@ -17,7 +17,7 @@ class AccountsModule : IModule
             .AddTransient<CreateAccountCommandHandler>()
             .AddTransient<LoginCommandHandler>()
             .AddTransient<IAccountPasswordService, AccountBCryptPasswordService>()
-            .AddTransient<IMapper<Account, DbAccount>, AccountMapper>()
+            .AddTransient<IAccountMapper, AccountMapper>()
             .AddTransient<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
     }
 
@@ -31,8 +31,8 @@ class AccountsModule : IModule
                     return Results.BadRequest();
                 }
 
-                var account = await handler.GetAccountOrDefaultByName(name, context.RequestAborted);
-                return account is null ? Results.NotFound() : Results.Ok(new AccountDto(account.Name));
+                var accountDto = await handler.GetAccountOrDefaultByName(name, context.RequestAborted);
+                return accountDto is null ? Results.NotFound() : Results.Ok(accountDto);
             })
             .WithName("GetAccountByName")
             .RequireAuthorization()

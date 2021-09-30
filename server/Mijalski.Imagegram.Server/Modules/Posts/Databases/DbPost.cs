@@ -12,6 +12,6 @@ class DbPost : ICreationAudited
     public string? Caption { get; set; }
     public Guid AccountId { get; set; } = default!;
     public virtual DbAccount Account { get; set; } = default!;
-    public DateTimeOffset CreationDateTime { get; set; }
+    public DateTime CreationDateTime { get; set; }
     public virtual ICollection<DbComment> Comments { get; set; } = new Collection<DbComment>();
 }

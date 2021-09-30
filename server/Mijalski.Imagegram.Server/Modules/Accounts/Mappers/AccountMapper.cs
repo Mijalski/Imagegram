@@ -4,10 +4,16 @@ using Mijalski.Imagegram.Server.Modules.Accounts.Databases;
 
 namespace Mijalski.Imagegram.Server.Modules.Accounts.Mappers;
 
-class AccountMapper : IMapper<Account, DbAccount>
+internal interface IAccountMapper
+{
+    Account Map(DbAccount dbAccount);
+    DbAccount Map(Account account);
+}
+
+class AccountMapper : IAccountMapper
 {
     public Account Map(DbAccount dbAccount) =>
-        new (dbAccount.Name);
+        new (dbAccount.Id, dbAccount.Name);
     public DbAccount Map(Account account) => new()
     {
         Name = account.Name

@@ -38,6 +38,7 @@ class JwtTokenGeneratorService : IJwtTokenGeneratorService
             Subject = new ClaimsIdentity(new[]
             {
                 new Claim("Id", dbAccount.Id.ToString()),
+                new Claim("Name", dbAccount.Name),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }),
             Expires = DateTime.UtcNow.AddHours(6),

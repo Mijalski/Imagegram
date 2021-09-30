@@ -28,4 +28,9 @@
     <ProjectReference Include="..\Mijalski.Imagegram.Domain\Mijalski.Imagegram.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructures\Services\" />
+    <Folder Include="Modules\Posts\Extensions\" />
+  </ItemGroup>
+
 </Project>

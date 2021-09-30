@@ -10,5 +10,5 @@ class DbComment : ICreationAudited
     public Guid AccountId { get; set; } = default!;
     public virtual DbAccount Account { get; set; } = default!;
     public Guid PostId { get; set; } = default!;
-    public DateTimeOffset CreationDateTime { get; set; }
+    public DateTime CreationDateTime { get; set; }
 }
