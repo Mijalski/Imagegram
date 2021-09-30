@@ -2,9 +2,9 @@
 
 public class Account
 {
-    public Account(string name)
+    public Account(string name) 
+        : this(Guid.Empty, name)
     {
-        Name = name;
     }
 
     public Account(Guid id, string name)

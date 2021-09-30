@@ -12,7 +12,7 @@ internal interface IPostMapper
 
 class PostMapper : IPostMapper
 {
-    public Post Map(DbPost dbPost, Account account) => new (account, new MemoryStream(dbPost.Image), dbPost.Caption);
+    public Post Map(DbPost dbPost, Account account) => new (dbPost.Id, account, new MemoryStream(dbPost.Image), dbPost.Caption);
     public DbPost Map(Post post, Account account) =>
         new ()
         {

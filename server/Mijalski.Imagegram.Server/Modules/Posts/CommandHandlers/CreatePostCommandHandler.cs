@@ -2,7 +2,6 @@
 using Mijalski.Imagegram.Domain.Posts;
 using Mijalski.Imagegram.Server.Infrastructures.Databases;
 using Mijalski.Imagegram.Server.Infrastructures.Generics;
-using Mijalski.Imagegram.Server.Modules.Accounts.Databases;
 using Mijalski.Imagegram.Server.Modules.Posts.Databases;
 using Mijalski.Imagegram.Server.Modules.Posts.Extensions;
 using Mijalski.Imagegram.Server.Modules.Posts.Mappers;
@@ -37,7 +36,6 @@ class CreatePostCommandHandler
         {
             throw new ArgumentException("Image format not recognized!");
         }
-
         if (imageFormat == ImageFormat.Png)
         {
             throw new NotImplementedException();

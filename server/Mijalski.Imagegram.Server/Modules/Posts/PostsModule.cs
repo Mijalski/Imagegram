@@ -10,7 +10,7 @@ public class PostsModule : IModule
 {
     public IServiceCollection RegisterModule(IServiceCollection services)
     {
-        return services.AddTransient<IPostManager, PostManager>()
+        return services
             .AddTransient<CreatePostCommandHandler>()
             .AddTransient<PostByIdQueryHandler>()
             .AddTransient<IPostMapper, PostMapper>();

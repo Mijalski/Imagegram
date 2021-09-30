@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="Infrastructures\Services\" />
+    <Folder Include="Modules\Comments\Mappers\" />
     <Folder Include="Modules\Posts\Extensions\" />
   </ItemGroup>
 
