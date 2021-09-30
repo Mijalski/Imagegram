@@ -4,6 +4,8 @@ using Mijalski.Imagegram.Server.Modules.Accounts.Databases;
 
 namespace Mijalski.Imagegram.Server.Modules.Accounts.QueryHandlers;
 
+public record AccountDto(string Name);
+
 class AccountByNameQueryHandler
 {
     private readonly DbSet<DbAccount> _dbAccounts;
@@ -13,6 +15,10 @@ class AccountByNameQueryHandler
         _dbAccounts = dbContext.Set<DbAccount>() ?? throw new ArgumentNullException(nameof(dbContext));
     }
 
-    public Task<DbAccount?> GetAccountOrDefaultByName(string name, CancellationToken cancellationToken = default) =>
-        _dbAccounts.SingleOrDefaultAsync(a => a.Name == name, cancellationToken);
+    public async Task<AccountDto?> GetAccountOrDefaultByName(string name, CancellationToken cancellationToken = default)
+    {
+        var dbAccount = await _dbAccounts.SingleOrDefaultAsync(a => a.Name == name, cancellationToken);
+
+        return dbAccount is null ? null : new AccountDto(dbAccount.Name);
+    }
 }

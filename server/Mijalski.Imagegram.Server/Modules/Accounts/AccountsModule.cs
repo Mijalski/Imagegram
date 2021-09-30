@@ -9,8 +9,6 @@ using Mijalski.Imagegram.Server.Modules.Accounts.QueryHandlers;
 
 namespace Mijalski.Imagegram.Server.Modules.Accounts;
 
-public record AccountDto(string Name);
-
 class AccountsModule : IModule
 {
     public IServiceCollection RegisterModule(IServiceCollection services)
@@ -34,12 +32,7 @@ class AccountsModule : IModule
                 }
 
                 var account = await handler.GetAccountOrDefaultByName(name, context.RequestAborted);
-                if (account is null)
-                {
-                    return Results.NotFound();
-                }
-
-                return Results.Ok(new AccountDto(account.Name));
+                return account is null ? Results.NotFound() : Results.Ok(new AccountDto(account.Name));
             })
             .WithName("GetAccountByName")
             .RequireAuthorization()
