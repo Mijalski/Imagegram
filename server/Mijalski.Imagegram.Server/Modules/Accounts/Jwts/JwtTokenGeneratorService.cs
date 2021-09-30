@@ -4,12 +4,13 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Mijalski.Imagegram.Domain.Accounts;
+using Mijalski.Imagegram.Server.Modules.Accounts.Databases;
 
 namespace Mijalski.Imagegram.Server.Modules.Accounts.Jwts;
 
-public interface IJwtTokenGeneratorService
+interface IJwtTokenGeneratorService
 {
-    ValueTask<string> GenerateTokenAsync(Account account, CancellationToken cancellationToken = default);
+    ValueTask<string> GenerateTokenAsync(DbAccount dbAccount, CancellationToken cancellationToken = default);
 }
 
 class JwtTokenGeneratorService : IJwtTokenGeneratorService
@@ -26,7 +27,7 @@ class JwtTokenGeneratorService : IJwtTokenGeneratorService
         _jwtOptions = options.Value;
     }
 
-    public ValueTask<string> GenerateTokenAsync(Account account, CancellationToken cancellationToken = default)
+    public ValueTask<string> GenerateTokenAsync(DbAccount dbAccount, CancellationToken cancellationToken = default)
     {
         var jwtTokenHandler = new JwtSecurityTokenHandler();
 
@@ -36,7 +37,7 @@ class JwtTokenGeneratorService : IJwtTokenGeneratorService
         {
             Subject = new ClaimsIdentity(new[]
             {
-                new Claim("Id", account.Id.ToString()),
+                new Claim("Id", dbAccount.Id.ToString()),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
             }),
             Expires = DateTime.UtcNow.AddHours(6),

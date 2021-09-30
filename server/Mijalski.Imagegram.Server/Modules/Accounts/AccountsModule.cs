@@ -4,6 +4,7 @@ using Mijalski.Imagegram.Server.Modules.Accounts.CommandHandlers;
 using Mijalski.Imagegram.Server.Modules.Accounts.Databases;
 using Mijalski.Imagegram.Server.Modules.Accounts.Jwts;
 using Mijalski.Imagegram.Server.Modules.Accounts.Mappers;
+using Mijalski.Imagegram.Server.Modules.Accounts.Passwords;
 using Mijalski.Imagegram.Server.Modules.Accounts.QueryHandlers;
 
 namespace Mijalski.Imagegram.Server.Modules.Accounts;
@@ -16,6 +17,8 @@ class AccountsModule : IModule
     {
         return services.AddTransient<AccountByNameQueryHandler>()
             .AddTransient<CreateAccountCommandHandler>()
+            .AddTransient<LoginCommandHandler>()
+            .AddTransient<IAccountPasswordService, AccountBCryptPasswordService>()
             .AddTransient<IMapper<Account, DbAccount>, AccountMapper>()
             .AddTransient<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
     }
@@ -39,6 +42,7 @@ class AccountsModule : IModule
                 return Results.Ok(new AccountDto(account.Name));
             })
             .WithName("GetAccountByName")
+            .RequireAuthorization()
             .Produces<AccountDto>()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces(StatusCodes.Status404NotFound);
@@ -58,6 +62,23 @@ class AccountsModule : IModule
             .WithName("CreateAccount")
             .ProducesValidationProblem()
             .Produces<CreateAccountCommand>(StatusCodes.Status201Created);
+
+        endpoints.MapPost("/accounts/login",
+                async (HttpContext context, LoginCommand command, LoginCommandHandler handler) =>
+                {
+                    if (command is null)
+                    {
+                        return Results.BadRequest();
+                    }
+
+                    var token = await handler.AttemptLoginAsync(command, context.RequestAborted);
+
+                    return string.IsNullOrEmpty(token) ? Results.BadRequest() : Results.Ok(token);
+                })
+            .WithName("Login")
+            .ProducesValidationProblem()
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces<string>(StatusCodes.Status200OK);
 
         return endpoints;
     }
