@@ -10,6 +10,6 @@ class DbPostEntityTypeConfiguration : IEntityTypeConfiguration<DbPost>
         builder.ToTable("DbPosts");
         builder.HasKey(e => e.Id);
         builder.HasMany(e => e.Comments).WithOne().HasForeignKey(e => e.PostId);
-        builder.HasOne(e => e.Account).WithMany().HasForeignKey(e => e.AccountId);
+        builder.HasOne(e => e.Account).WithMany(e => e.Posts).HasForeignKey(e => e.AccountId).OnDelete(DeleteBehavior.Cascade);
     }
 }

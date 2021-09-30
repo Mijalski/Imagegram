@@ -16,6 +16,7 @@ class AccountsModule : IModule
         return services.AddTransient<AccountByNameQueryHandler>()
             .AddTransient<CreateAccountCommandHandler>()
             .AddTransient<LoginCommandHandler>()
+            .AddTransient<DeleteAccountHandler>()
             .AddTransient<IAccountPasswordService, AccountBCryptPasswordService>()
             .AddTransient<IAccountMapper, AccountMapper>()
             .AddTransient<IJwtTokenGeneratorService, JwtTokenGeneratorService>();
@@ -72,6 +73,17 @@ class AccountsModule : IModule
             .ProducesValidationProblem()
             .Produces(StatusCodes.Status400BadRequest)
             .Produces<string>(StatusCodes.Status200OK);
+
+
+        endpoints.MapDelete("/accounts",
+                async (HttpContext context, DeleteAccountHandler handler) =>
+                {
+                    await handler.DeleteAccount(context.RequestAborted);
+                    return Results.Ok();
+                })
+            .WithName("DeleteAccount")
+            .RequireAuthorization()
+            .Produces(StatusCodes.Status200OK);
 
         return endpoints;
     }
