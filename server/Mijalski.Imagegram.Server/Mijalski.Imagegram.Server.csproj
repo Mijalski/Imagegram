@@ -27,8 +27,4 @@
     <ProjectReference Include="..\Mijalski.Imagegram.Domain\Mijalski.Imagegram.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Modules\Accounts\Databases\" />
-  </ItemGroup>
-
 </Project>

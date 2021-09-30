@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Mijalski.Imagegram.Server.Modules.Comments.Databases;
 
-namespace Mijalski.Imagegram.Server.Infrastructures.Databases.Configurations;
+namespace Mijalski.Imagegram.Server.Modules.Comments.Databases;
 
 class DbCommentEntityTypeConfiguration : IEntityTypeConfiguration<DbComment>
 {

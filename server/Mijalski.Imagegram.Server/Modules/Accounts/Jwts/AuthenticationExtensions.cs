@@ -8,6 +8,8 @@ static class AuthenticationExtensions
 {
     public static IServiceCollection AddAccountAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
+        services.Configure<JwtOptions>(configuration.GetSection("Jwt"));
+
         services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
